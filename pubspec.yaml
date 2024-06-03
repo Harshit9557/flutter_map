@@ -31,10 +31,10 @@ dependencies:
   dart_earcut: ^1.1.0
   flutter:
     sdk: flutter
-  http: ^1.2.1
+  http: 
   latlong2: ^0.9.1
   logger: ^2.3.0
-  meta: ^1.11.0
+  meta: 
   polylabel: ^1.0.1
   proj4dart: ^2.1.0
   vector_math: ^2.1.4

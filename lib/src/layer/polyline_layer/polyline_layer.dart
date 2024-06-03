@@ -52,6 +52,9 @@ class PolylineLayer<R extends Object> extends StatefulWidget {
   /// Defaults to 10.
   final double minimumHitbox;
 
+  /// Let you show anything on hover.
+  final Function? onHover;
+
   /// Create a new [PolylineLayer] to use as child inside [FlutterMap.children].
   const PolylineLayer({
     super.key,
@@ -60,6 +63,7 @@ class PolylineLayer<R extends Object> extends StatefulWidget {
     this.simplificationTolerance = 0.4,
     this.hitNotifier,
     this.minimumHitbox = 10,
+    this.onHover,
   }) : assert(
           simplificationTolerance >= 0,
           'simplificationTolerance cannot be negative: $simplificationTolerance',
@@ -136,14 +140,17 @@ class _PolylineLayerState<R extends Object> extends State<PolylineLayer<R>> {
           );
 
     return MobileLayerTransformer(
-      child: CustomPaint(
-        painter: _PolylinePainter(
-          polylines: culled,
-          camera: camera,
-          hitNotifier: widget.hitNotifier,
-          minimumHitbox: widget.minimumHitbox,
+      child: MouseRegion(
+        onHover: (event) => widget.onHover,
+        child: CustomPaint(
+          painter: _PolylinePainter(
+            polylines: culled,
+            camera: camera,
+            hitNotifier: widget.hitNotifier,
+            minimumHitbox: widget.minimumHitbox,
+          ),
+          size: Size(camera.size.x, camera.size.y),
         ),
-        size: Size(camera.size.x, camera.size.y),
       ),
     );
   }

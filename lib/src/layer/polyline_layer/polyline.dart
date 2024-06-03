@@ -42,6 +42,9 @@ class Polyline<R extends Object> {
   /// {@macro fm.hde.hitValue}
   final R? hitValue;
 
+  /// Let you show anything on hover.
+  final Function? onHover;
+
   /// Create a new [Polyline] used for the [PolylineLayer].
   Polyline({
     required this.points,
@@ -56,25 +59,27 @@ class Polyline<R extends Object> {
     this.strokeJoin = StrokeJoin.round,
     this.useStrokeWidthInMeter = false,
     this.hitValue,
+    this.onHover,
   });
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Polyline &&
-          strokeWidth == other.strokeWidth &&
-          color == other.color &&
-          borderStrokeWidth == other.borderStrokeWidth &&
-          borderColor == other.borderColor &&
-          pattern == other.pattern &&
-          strokeCap == other.strokeCap &&
-          strokeJoin == other.strokeJoin &&
-          useStrokeWidthInMeter == other.useStrokeWidthInMeter &&
-          hitValue == other.hitValue &&
-          // Expensive computations last to take advantage of lazy logic gates
-          listEquals(colorsStop, other.colorsStop) &&
-          listEquals(gradientColors, other.gradientColors) &&
-          listEquals(points, other.points));
+              strokeWidth == other.strokeWidth &&
+              color == other.color &&
+              borderStrokeWidth == other.borderStrokeWidth &&
+              borderColor == other.borderColor &&
+              pattern == other.pattern &&
+              strokeCap == other.strokeCap &&
+              strokeJoin == other.strokeJoin &&
+              useStrokeWidthInMeter == other.useStrokeWidthInMeter &&
+              hitValue == other.hitValue &&
+              // Expensive computations last to take advantage of lazy logic gates
+              listEquals(colorsStop, other.colorsStop) &&
+              listEquals(gradientColors, other.gradientColors) &&
+              listEquals(points, other.points)) &&
+          onHover == other.onHover;
 
   // Used to batch draw calls to the canvas
   int? _renderHashCode;
@@ -92,6 +97,7 @@ class Polyline<R extends Object> {
         strokeJoin,
         useStrokeWidthInMeter,
         hitValue,
+        onHover,
       );
 
   int? _hashCode;
